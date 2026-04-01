@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>清明寄思·线上祭奠 | 缅怀先贤 文明追思</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Segoe UI", "Roboto", "Noto Sans", system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f2;
+            color: #1e2a2e;
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cpath fill="%23e0e0d8" d="M30,10 Q50,0 70,10 Q90,20 90,40 Q90,60 70,70 Q50,80 30,70 Q10,60 10,40 Q10,20 30,10Z" opacity="0.4"/%3E%3C/svg%3E');
+            background-size: 180px;
+            background-repeat: repeat;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #1f2c38 100%);
+            color: #fef9e6;
+            text-align: center;
+            padding: 38px 20px;
+            margin-bottom: 48px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            border-bottom: 1px solid rgba(255, 245, 210, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1rem;
+            margin-top: 12px;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .memorial-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            margin-bottom: 56px;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 250, 240, 0.6);
+            border-radius: 48px;
+            padding: 24px 20px;
+        }
+
+        .candle-area {
+            text-align: center;
+            background: #fefcf5;
+            padding: 20px 28px;
+            border-radius: 60px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 使用纯CSS绘制蜡烛，彻底解决图片加载失败问题 */
+        .candle-svg {
+            width: 130px;
+            height: 180px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        
+        .candle-svg:hover {
+            transform: scale(1.05) translateY(-4px);
+        }
+        
+        .candle-svg svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(2px 6px 12px rgba(0, 0, 0, 0.2));
+        }
+
+        .flower-btn {
+            background: #6b8c74;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 12px 28px;
+            margin-top: 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+        }
+
+        .flower-btn:hover {
+            background-color: #4e6b5c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(62, 82, 68, 0.3);
+        }
+
+        .flower-btn:active {
+            transform: translateY(1px);
+        }
+
+        .memorial-text {
+            max-width: 540px;
+            text-align: center;
+            background: rgba(255, 253, 245, 0.7);
+            padding: 20px 24px;
+            border-radius: 48px;
+        }
+
+        .memorial-text h2 {
+            font-size: 1.9rem;
+            color: #2b4b3c;
+            margin-bottom: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .memorial-text p {
+            font-size: 1rem;
+            color: #2c3e2f;
+            line-height: 1.75;
+        }
+
+        .message-section {
+            background: #fffffaf0;
+            padding: 44px 36px;
+            border-radius: 32px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+            margin-bottom: 48px;
+            border: 1px solid #e2ddd2;
+        }
+
+        .message-section h3 {
+            font-size: 1.9rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 36px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .message-section h3::after {
+            content: '';
+            width: 70px;
+            height: 2.5px;
+            background: #8aa88c;
+            position: absolute;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            margin-bottom: 42px;
+        }
+
+        .message-form input,
+        .message-form textarea {
+            padding: 14px 18px;
+            border: 1px solid #d6d0c2;
+            border-radius: 28px;
+            font-size: 1rem;
+            outline: none;
+            background-color: #fefcf8;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .message-form input:focus,
+        .message-form textarea:focus {
+            border-color: #8aa88c;
+            box-shadow: 0 0 0 3px rgba(106, 140, 108, 0.2);
+            background: white;
+        }
+
+        .message-form textarea {
+            resize: vertical;
+            border-radius: 24px;
+            min-height: 110px;
+        }
+
+        .submit-btn {
+            background-color: #6b8c74;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s;
+            letter-spacing: 1px;
+            width: 220px;
+            margin: 0 auto;
+            display: inline-block;
+        }
+
+        .submit-btn:hover {
+            background-color: #4e6b5c;
+            transform: scale(0.98);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-list {
+            max-height: 340px;
+            overflow-y: auto;
+            padding-right: 8px;
+            border-top: 1px dashed #ddd2c0;
+            padding-top: 20px;
+        }
+
+        .message-item {
+            background: #fefaf2;
+            padding: 16px 20px;
+            border-radius: 28px;
+            margin-bottom: 18px;
+            transition: all 0.2s;
+            border: 1px solid #ece4d8;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .message-item .name {
+            font-weight: 700;
+            color: #2c5a47;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .message-item .time {
+            font-size: 0.7rem;
+            color: #9b8e7a;
+            margin: 5px 0 8px 0;
+            letter-spacing: 0.3px;
+        }
+
+        .message-item .content {
+            color: #2c3e33;
+            line-height: 1.55;
+            word-break: break-word;
+            font-size: 0.95rem;
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: #b3aa99;
+            padding: 32px 16px;
+            font-style: italic;
+        }
+
+        .flower-petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            font-size: 28px;
+            user-select: none;
+            animation: floatUp 2s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) rotate(25deg);
+            }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c3e2fd9;
+            backdrop-filter: blur(8px);
+            color: #fef3df;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            z-index: 1100;
+            animation: fadeToast 2.5s ease forwards;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border: 1px solid #cdc2aa;
+        }
+
+        @keyframes fadeToast {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+            15% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            85% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+                visibility: hidden;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 32px 20px;
+            background-color: #1f2c28;
+            color: #e2d9cc;
+            font-size: 0.85rem;
+            margin-top: 40px;
+            border-top: 1px solid #5a6e5c;
+        }
+
+        @media (max-width: 720px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .memorial-section {
+                gap: 28px;
+                padding: 20px 12px;
+            }
+            .message-section {
+                padding: 28px 20px;
+            }
+            .candle-svg {
+                width: 100px;
+                height: 140px;
+            }
+            .flower-btn {
+                padding: 10px 22px;
+                font-size: 1rem;
+            }
+            .submit-btn {
+                width: 100%;
+            }
+        }
+
+        .message-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .message-list::-webkit-scrollbar-track {
+            background: #ece3d8;
+            border-radius: 10px;
+        }
+        .message-list::-webkit-scrollbar-thumb {
+            background: #b7ab95;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🌿 清明寄哀思 · 文明祭先贤 🌼</h1>
+    <p>缅怀先烈 致敬先贤 | 绿色祭奠 传承文明 | 云端寄情 心意永恒</p>
+</div>
+
+<div class="container">
+    <div class="memorial-section">
+        <div class="candle-area">
+            <!-- 使用纯SVG绘制蜡烛，彻底解决图片加载失败问题 -->
+            <div class="candle-svg" id="memorialCandle">
+                <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 烛身 -->
+                    <rect x="35" y="30" width="30" height="85" fill="#F4E3C6" stroke="#D4B88C" stroke-width="1.5" rx="4"/>
+                    <!-- 烛身纹理 -->
+                    <rect x="38" y="45" width="24" height="55" fill="#E8D4B0" rx="2"/>
+                    <!-- 烛泪效果 -->
+                    <ellipse cx="50" cy="38" rx="16" ry="8" fill="#F9E9CE"/>
+                    <path d="M45 40 L50 38 L55 40 L53 48 L50 50 L47 48 Z" fill="#F7DEA0"/>
+                    <!-- 火焰外焰 -->
+                    <path d="M50 20 L45 32 L50 38 L55 32 L50 20Z" fill="#FFB347"/>
+                    <!-- 火焰内焰 -->
+                    <path d="M50 23 L47 31 L50 35 L53 31 L50 23Z" fill="#FF8C42"/>
+                    <!-- 焰心 -->
+                    <circle cx="50" cy="26" r="2.5" fill="#FF6B35"/>
+                    <!-- 烛光光晕 -->
+                    <circle cx="50" cy="25" r="8" fill="#FFD966" opacity="0.4"/>
+                    <!-- 装饰光点 -->
+                    <circle cx="48" cy="27" r="1" fill="#FFF5E0" opacity="0.9"/>
+                    <circle cx="52" cy="27" r="1" fill="#FFF5E0" opacity="0.9"/>
+                </svg>
+            </div>
+            <button class="flower-btn" id="sendFlowerBtn">🌸 献上一枝菊 🌸</button>
+        </div>
+        <div class="memorial-text">
+            <h2>🍃 清明追思 · 永怀感恩</h2>
+            <p>清明，是血脉里的眷恋，是家国情怀的延续。我们以线上低碳祭奠的方式，缅怀革命英烈，追思先贤师长，传承优良家风。一瓣心香，一束素菊，跨越时空，让思念与敬意在春风里绽放。文明祭扫，让爱同在。</p>
+        </div>
+    </div>
+
+    <div class="message-section">
+        <h3>💌 缅怀寄语 · 将思念化作文字</h3>
+        <div class="message-form">
+            <input type="text" id="userName" placeholder="您的称呼 (如：张先生、李同学 或 匿名)" maxlength="30" autocomplete="off">
+            <textarea id="userMessage" placeholder="写下您的追思与寄语… 缅怀亲人，致敬英烈，或表达对先贤的感念" maxlength="280"></textarea>
+            <button class="submit-btn" id="submitMsgBtn">✍️ 留下追思</button>
+        </div>
+        <div class="message-list" id="messageListContainer">
+            <div class="empty-msg">✨ 愿每一份寄语，都化作清风，遥寄思念 ✨</div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>🌱 一瓣心香，云端祭奠 · 让清明更文明 🌱</p>
+    <p style="margin-top: 8px; font-size: 0.75rem;">缅怀先烈，感恩前行 | 线上追思，传承不息</p>
+</footer>
+
+<script>
+    let messages = [];
+
+    function loadMessagesFromStorage() {
+        const stored = localStorage.getItem("qingming_messages");
+        if (stored) {
+            try {
+                messages = JSON.parse(stored);
+                if (!Array.isArray(messages)) messages = [];
+            } catch(e) { messages = []; }
+        } else {
+            messages = [
+                { id: "init1", name: "李同学", time: "2025-04-03 10:23", content: "向革命先烈致敬！今日盛世，如您所愿。吾辈当自强！" },
+                { id: "init2", name: "王女士", time: "2025-04-03 14:15", content: "怀念外婆，您包的青团味道永远留在心里，愿天堂安好。" },
+                { id: "init3", name: "陈老师", time: "2025-04-04 09:42", content: "清明雨上，追思先贤孔子，儒家智慧润泽千年。致敬所有为文明火种奉献的人。" }
+            ];
+            saveMessagesToStorage();
+        }
+        renderMessageList();
+    }
+
+    function saveMessagesToStorage() {
+        localStorage.setItem("qingming_messages", JSON.stringify(messages));
+    }
+
+    function getCurrentTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hour = String(now.getHours()).padStart(2, '0');
+        const minute = String(now.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day} ${hour}:${minute}`;
+    }
+
+    function generateId() {
+        return Date.now() + '-' + Math.random().toString(36).substr(2, 6);
+    }
+
+    function showToast(message, duration = 2300) {
+        const existingToast = document.querySelector('.toast');
+        if(existingToast) existingToast.remove();
+        const toastDiv = document.createElement('div');
+        toastDiv.className = 'toast';
+        toastDiv.innerText = message;
+        document.body.appendChild(toastDiv);
+        setTimeout(() => {
+            if(toastDiv && toastDiv.parentNode) toastDiv.remove();
+        }, duration);
+    }
+
+    function renderMessageList() {
+        const container = document.getElementById('messageListContainer');
+        if (!container) return;
+        if (!messages || messages.length === 0) {
+            container.innerHTML = `<div class="empty-msg">🕊️ 尚未有寄语，成为第一个寄思人吧 🕊️</div>`;
+            return;
+        }
+        const sorted = [...messages].reverse();
+        let html = '';
+        for (let msg of sorted) {
+            const displayName = msg.name && msg.name.trim() !== "" ? escapeHtml(msg.name) : "敬仰者";
+            const timeStr = msg.time || "往昔时刻";
+            const contentStr = escapeHtml(msg.content).replace(/\\n/g, '<br>');
+            html += `
+                <div class="message-item">
+                    <div class="name">🌼 ${displayName}</div>
+                    <div class="time">📅 ${timeStr}</div>
+                    <div class="content">${contentStr}</div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function addNewMessage(userName, userMsg) {
+        if (!userMsg || userMsg.trim() === "") {
+            showToast("✍️ 请写下您的思念或寄语～", 1800);
+            return false;
+        }
+        if (userMsg.length > 280) {
+            showToast("寄语内容不能超过280个字哦", 1800);
+            return false;
+        }
+        let finalName = userName ? userName.trim() : "";
+        if (finalName === "") finalName = "敬仰者";
+        if (finalName.length > 26) finalName = finalName.slice(0, 24) + "..";
+        const newMessage = {
+            id: generateId(),
+            name: finalName,
+            time: getCurrentTime(),
+            content: userMsg.trim()
+        };
+        messages.unshift(newMessage);
+        saveMessagesToStorage();
+        renderMessageList();
+        return true;
+    }
+
+    function createFloatingFlower(x, y) {
+        const flowerEmojis = ['🌸', '🌼', '🌻', '🌺', '🍃', '🕊️', '✨', '🌿', '💐', '🥀'];
+        const randomFlower = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+        const petal = document.createElement('div');
+        petal.className = 'flower-petal';
+        petal.innerText = randomFlower;
+        const offsetX = (Math.random() - 0.5) * 70;
+        const startX = x + offsetX;
+        petal.style.left = startX + 'px';
+        petal.style.top = y + 'px';
+        petal.style.fontSize = (22 + Math.random() * 18) + 'px';
+        petal.style.opacity = 0.85;
+        petal.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+        petal.style.animationDuration = 1.2 + Math.random() * 1 + 's';
+        document.body.appendChild(petal);
+        setTimeout(() => {
+            if(petal && petal.parentNode) petal.remove();
+        }, 2100);
+    }
+
+    function handleSendFlower() {
+        let totalFlowers = localStorage.getItem("qingming_flower_total");
+        if (!totalFlowers) totalFlowers = 0;
+        totalFlowers = parseInt(totalFlowers) + 1;
+        localStorage.setItem("qingming_flower_total", totalFlowers);
+        
+        const btn = document.getElementById('sendFlowerBtn');
+        const rect = btn.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const petalCount = 14 + Math.floor(Math.random() * 12);
+        for (let i = 0; i < petalCount; i++) {
+            setTimeout(() => {
+                const xOffset = (Math.random() - 0.5) * 110;
+                createFloatingFlower(centerX + xOffset, centerY - 8);
+            }, i * 40);
+        }
+        const candleSvg = document.getElementById('memorialCandle');
+        if(candleSvg) {
+            const candleRect = candleSvg.getBoundingClientRect();
+            for (let i=0; i<8; i++) {
+                setTimeout(() => {
+                    const xOff = (Math.random() - 0.5) * 90;
+                    createFloatingFlower(candleRect.left + candleRect.width/2 + xOff, candleRect.top + candleRect.height/2);
+                }, i*60);
+            }
+        }
+        showToast(`🙏 感恩献花 · 心意已达 · 累计线上献花 ${totalFlowers} 次 🙏`, 2500);
+        if (navigator.vibrate) navigator.vibrate(60);
+    }
+
+    function candleClickEffect() {
+        const candle = document.getElementById('memorialCandle');
+        if(candle) {
+            candle.style.transform = 'scale(1.05)';
+            setTimeout(() => { if(candle) candle.style.transform = ''; }, 180);
+            const flashToast = document.createElement('div');
+            flashToast.innerText = '🕯️ 烛光寄远 · 思念长明 🕯️';
+            flashToast.style.position = 'fixed';
+            flashToast.style.bottom = '40%';
+            flashToast.style.left = '50%';
+            flashToast.style.transform = 'translateX(-50%)';
+            flashToast.style.backgroundColor = '#d9c8aa';
+            flashToast.style.color = '#3e3a2b';
+            flashToast.style.padding = '6px 20px';
+            flashToast.style.borderRadius = '40px';
+            flashToast.style.fontSize = '0.9rem';
+            flashToast.style.zIndex = '1001';
+            flashToast.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            flashToast.style.pointerEvents = 'none';
+            document.body.appendChild(flashToast);
+            setTimeout(() => flashToast.remove(), 1000);
+        }
+    }
+
+    function initFlowerCountDisplay() {
+        let total = localStorage.getItem("qingming_flower_total");
+        if (!total) {
+            localStorage.setItem("qingming_flower_total", "0");
+            total = "0";
+        }
+        setTimeout(() => {
+            if(parseInt(total) > 0) {
+                showToast(`🌼 感谢您与 ${total} 位追思者一同云端寄情 🌼`, 2000);
+            } else {
+                showToast("🌿 献上一枝菊，寄托无尽思念 🌿", 1800);
+            }
+        }, 500);
+    }
+
+    function onSubmitMessage() {
+        const nameInput = document.getElementById('userName');
+        const msgInput = document.getElementById('userMessage');
+        let nameVal = nameInput ? nameInput.value : '';
+        let msgVal = msgInput ? msgInput.value : '';
+        if (!msgVal.trim()) {
+            showToast("请写下您的追思寄语，让思念传递", 1800);
+            return;
+        }
+        const success = addNewMessage(nameVal, msgVal);
+        if (success) {
+            if (msgInput) msgInput.value = '';
+            showToast("💚 追思已寄达 · 感念长存 💚", 2000);
+            const msgSection = document.querySelector('.message-section');
+            if(msgSection) msgSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function bindEvents() {
+        const flowerBtn = document.getElementById('sendFlowerBtn');
+        if (flowerBtn) {
+            flowerBtn.addEventListener('click', handleSendFlower);
+        }
+        const submitBtn = document.getElementById('submitMsgBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', onSubmitMessage);
+        }
+        const candleSvg = document.getElementById('memorialCandle');
+        if (candleSvg) {
+            candleSvg.addEventListener('click', candleClickEffect);
+        }
+        const textarea = document.getElementById('userMessage');
+        if(textarea) {
+            textarea.addEventListener('keydown', (e) => {
+                if((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    onSubmitMessage();
+                }
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadMessagesFromStorage();
+        bindEvents();
+        initFlowerCountDisplay();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>斗罗大陆 · 玉小刚 | 理论宗师二创殿堂</title>
+    <!-- 引入Google Fonts提升中文字体质感 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Noto+Serif+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0704;
+            font-family: 'Inter', 'Noto Serif SC', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            color: #ece8e0;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 古典卷轴氛围 */
+        .bg-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(210, 180, 140, 0.08) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 头部大师区 */
+        .master-hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            background: rgba(20, 15, 10, 0.65);
+            backdrop-filter: blur(8px);
+            border-radius: 3rem;
+            padding: 2rem 2.5rem;
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+        }
+
+        .master-info {
+            flex: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #b8860b;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #1e1a14;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #f5e7c8, #dbb86b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .title-sub {
+            font-size: 1.1rem;
+            color: #c9aa5f;
+            border-left: 3px solid #c9aa5f;
+            padding-left: 1rem;
+            margin: 0.8rem 0 1.2rem;
+            font-weight: 400;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.05rem;
+            color: #ddd2bd;
+            max-width: 90%;
+            margin-top: 1rem;
+            background: rgba(0,0,0,0.4);
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            backdrop-filter: blur(2px);
+        }
+
+        .master-avatar {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar-circle {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(145deg, #2f2a22, #1c1710);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #e4b363;
+            box-shadow: 0 0 20px rgba(218, 165, 32, 0.4);
+        }
+
+        .avatar-circle i {
+            font-size: 6rem;
+            color: #dbb362;
+            filter: drop-shadow(2px 4px 6px black);
+        }
+
+        /* 统计卡牌 */
+        .stats {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+
+        .stat-card {
+            background: #19130c;
+            border-radius: 2rem;
+            padding: 1rem 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(4px);
+            border-bottom: 2px solid #aa7c3c;
+            transition: all 0.2s;
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: #d9a13b;
+        }
+
+        .stat-info h3 {
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .stat-info p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b78e54;
+        }
+
+        /* 章节标题 */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem 0;
+            border-left: 6px solid #e4b363;
+            padding-left: 1rem;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .section-title i {
+            margin-right: 12px;
+            color: #e4b363;
+        }
+
+        /* 二创视频网格 */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .video-card {
+            background: #14100b;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.3s;
+            border: 1px solid #2d241b;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            border-color: #c9963e;
+            box-shadow: 0 20px 28px -12px rgba(0,0,0,0.6);
+        }
+
+        .video-thumb {
+            position: relative;
+            background: #2a221c;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d9a13b;
+            font-size: 3rem;
+            background-image: linear-gradient(145deg, #2f261d, #1d1610);
+        }
+
+        .play-overlay {
+            position: absolute;
+            background: rgba(0,0,0,0.6);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .video-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-overlay i {
+            font-size: 3.5rem;
+            color: #f3c26b;
+            text-shadow: 0 0 8px black;
+        }
+
+        .video-info {
+            padding: 1.2rem;
+        }
+
+        .video-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #f2e0bc;
+        }
+
+        .video-info p {
+            font-size: 0.85rem;
+            color: #b6a07e;
+            margin-bottom: 0.8rem;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #8f7a5c;
+            border-top: 1px solid #2a221a;
+            padding-top: 0.6rem;
+        }
+
+        .tag {
+            background: #2a221a;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* 大师理论语录区 */
+        .theory-quote {
+            background: linear-gradient(120deg, #191008, #100c07);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin: 3rem 0;
+            border-left: 8px solid #daa445;
+            font-style: normal;
+        }
+
+        .theory-quote p {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .theory-quote span {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #c2a15b;
+        }
+
+        /* 评论区二创氛围 */
+        .community {
+            margin-top: 3rem;
+            background: #0e0b07;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid #33281e;
+        }
+
+        .comm-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .comm-header i {
+            font-size: 2rem;
+            color: #e4b363;
+        }
+
+        .comment-item {
+            background: #1b1610;
+            border-radius: 1.5rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .comment-text {
+            flex: 4;
+        }
+
+        .comment-text strong {
+            color: #e8c27a;
+        }
+
+        .like-btn {
+            background: none;
+            border: 1px solid #6b4e2a;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            color: #dcb065;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .like-btn:hover {
+            background: #e4b36320;
+            border-color: #e4b363;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2d241b;
+            font-size: 0.8rem;
+            color: #8b744c;
+        }
+
+        @media (max-width: 760px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .master-hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .title-sub {
+                border-left: none;
+                text-align: center;
+            }
+            .quote {
+                max-width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-texture"></div>
+<div class="container">
+    <!-- 大师主视觉 -->
+    <div class="master-hero">
+        <div class="master-info">
+            <div class="badge"><i class="fas fa-dragon"></i> 武魂殿荣誉长老 · 理论奠基人</div>
+            <h1>玉小刚<br>“大师”</h1>
+            <div class="title-sub">黄金铁三角 · 智慧之角 | 蓝电霸王龙宗失落的天才</div>
+            <div class="quote">
+                <i class="fas fa-quote-left" style="margin-right: 8px; opacity: 0.7;"></i> 没有废物的武魂，只有废物的魂师。
+                —— 这句箴言，改变了整个斗罗大陆的魂师认知。
+            </div>
+        </div>
+        <div class="master-avatar">
+            <div class="avatar-circle">
+                <i class="fas fa-brain"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二创社区数据卡片 (致敬二创文化) -->
+    <div class="stats">
+        <div class="stat-card">
+            <i class="fab fa-youtube"></i>
+            <div class="stat-info">
+                <h3>10K+</h3>
+                <p>二创视频</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-video"></i>
+            <div class="stat-info">
+                <h3>300+</h3>
+                <p>优质二创作品</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-heart"></i>
+            <div class="stat-info">
+                <h3>百万</h3>
+                <p>社区喜爱度</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二创视频精选区域 -->
+    <div class="section-title">
+        <i class="fas fa-film"></i> 大师 · 二创影像馆
+        <span style="font-size: 0.9rem; margin-left: 12px;">✨ 同人作品 · 混剪 · 剧情解析</span>
+    </div>
+    <div class="video-grid" id="videoGrid">
+        <!-- 视频卡片 动态生成（同时保留静态备用但动态注入） -->
+    </div>
+
+    <!-- 大师理论语录 鼓舞二创精神 -->
+    <div class="theory-quote">
+        <p><i class="fas fa-chalkboard-teacher" style="margin-right: 12px; color: #e4b363;"></i> “理论派宗师 · 玉小刚的十大武魂研究法则，至今仍是无数二创作者灵感的源头。从十大核心竞争力到武魂变异推论，大师的智慧在二创宇宙中不断焕发新生。”</p>
+        <span>—— 二创区致敬 · 《斗罗·智谋篇》超千万播放</span>
+    </div>
+
+    <!-- 更多创作类型 / 推荐榜 -->
+    <div class="section-title">
+        <i class="fas fa-users"></i> 热门二创类型 · 大师宇宙
+    </div>
+    <div class="video-grid" id="extraGrid">
+        <!-- 第二个特色网格展示不同风格的二创 -->
+    </div>
+
+    <!-- 社区互动: 模拟二创留言/点赞氛围 -->
+    <div class="community">
+        <div class="comm-header">
+            <i class="fas fa-comment-dots"></i>
+            <h3>「二创作者 · 热评共振」</h3>
+        </div>
+        <div id="commentList">
+            <!-- 动态评论列表 -->
+        </div>
+        <div style="margin-top: 1rem; text-align: right;">
+            <button id="addCommentBtn" style="background: #2b2118; border: 1px solid #b97f35; color: #efcd95; padding: 0.5rem 1.5rem; border-radius: 2rem; cursor: pointer;"><i class="fas fa-pen"></i> 留下你的二创感想</button>
+        </div>
+    </div>
+    <footer>
+        <i class="fas fa-crown"></i> 致敬玉小刚——以凡人之躯，行神明理论。所有二创作品仅用于热爱展示，灵感来自《斗罗大陆》<br>
+        同人创作永不熄 · 智慧大师永存
+    </footer>
+</div>
+
+<script>
+    // 二创视频数据 (基于玉小刚的二创主题)
+    const videos = [
+        {
+            title: "【大师·玉小刚】智谋无双 | 高燃混剪",
+            desc: "从“废物”到理论之神，每一个决策都改变历史。",
+            type: "高燃/混剪",
+            views: "128万",
+            icon: "fa-chalkboard-user"
+        },
+        {
+            title: "如果玉小刚拥有顶级武魂 | 平行宇宙二创",
+            desc: "假如大师的武魂不是罗三炮，斗罗结局会怎样？脑洞神作。",
+            type: "剧情向",
+            views: "89.2万",
+            icon: "fa-dragon"
+        },
+        {
+            title: "黄金铁三角·重聚 | 情感催泪向",
+            desc: "玉小刚×柳二龙×弗兰德，未曾说出口的守护。",
+            type: "情感/MV",
+            views: "203万",
+            icon: "fa-heart"
+        },
+        {
+            title: "大师的十大核心理论 | 武魂研究笔记",
+            desc: "深度解析玉小刚十大核心竞争力，学术二创精品。",
+            type: "解析/科普",
+            views: "56.3万",
+            icon: "fa-book"
+        },
+        {
+            title: "【手书/动画】玉小刚·无悔之路",
+            desc: "全手绘还原大师一生，从蓝电霸王龙到唐三恩师。",
+            type: "手书动画",
+            views: "74.5万",
+            icon: "fa-paintbrush-fine"
+        },
+        {
+            title: "如果大师是封号斗罗 | 同人剧场",
+            desc: "爆改设定，玉小刚武魂真身降临，震撼演绎。",
+            type: "搞笑/脑洞",
+            views: "112万",
+            icon: "fa-mask"
+        }
+    ];
+
+    const extraCreations = [
+        {
+            title: "【AMV】玉小刚·孤勇者 | 智慧独白",
+            desc: "谁说站在光里的才算英雄，大师内心世界绝美剪辑。",
+            type: "音乐/AMV",
+            views: "98.7万",
+            icon: "fa-music"
+        },
+        {
+            title: "大师语录 | 罗三炮的逆袭之路",
+            desc: "搞笑二创，罗三炮变成黄金圣龙名场面盘点。",
+            type: "搞笑配音",
+            views: "152万",
+            icon: "fa-face-smile"
+        },
+        {
+            title: "【沙雕动画】玉小刚的执教日常",
+            desc: "当大师成为史莱克最强嘴遁导师，笑点拉满。",
+            type: "沙雕动画",
+            views: "210万",
+            icon: "fa-laugh-beam"
+        },
+        {
+            title: "终极解读·大师的武魂变异理论",
+            desc: "资深粉丝万字解析，二创区镇站之宝。",
+            type: "深度解析",
+            views: "43.8万",
+            icon: "fa-microscope"
+        }
+    ];
+
+    // 渲染视频卡片辅助函数
+    function renderVideoCards(containerId, videoArray) {
+        const container = document.getElementById(containerId);
+        if(!container) return;
+        container.innerHTML = '';
+        videoArray.forEach(v => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            // 随机取一个渐变色图标风格
+            const iconClass = v.icon || 'fa-video';
+            card.innerHTML = `
+                <div class="video-thumb">
+                    <i class="fas ${iconClass}" style="font-size: 3.2rem; opacity: 0.8;"></i>
+                    <div class="play-overlay">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3>${escapeHtml(v.title)}</h3>
+                    <p>${escapeHtml(v.desc)}</p>
+                    <div class="video-meta">
+                        <span><i class="fas fa-eye"></i> ${v.views} 播放</span>
+                        <span class="tag">${escapeHtml(v.type)}</span>
+                    </div>
+                </div>
+            `;
+            // 添加点击模拟播放提示（演示性质）
+            card.addEventListener('click', (e) => {
+                if(e.target.closest('.play-overlay') || e.target.closest('.video-card')) {
+                    alert(`✨ 即将播放：《${v.title}》\\n（二创演示站｜致敬大师玉小刚）`);
+                }
+            });
+            container.appendChild(card);
+        });
+    }
+
+    // 简单的防XSS
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        }).replace(/[\\uD800-\\uDBFF][\\uDC00-\\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // 评论列表数据 (模拟二创社区热评)
+    let comments = [
+        { user: "蓝电霸王龙后援会", text: "大师的理论至今仍是斗罗学术巅峰！二创把那种隐忍的智慧表现得淋漓尽致。", likes: 342 },
+        { user: "史莱克七怪厨", text: "最喜欢看玉小刚指导唐三的二创，每次都能燃起来，智慧才是最强武魂！", likes: 289 },
+        { user: "罗三炮护卫队", text: "罗三炮值得一个奥斯卡！好多二创把大师和罗三炮的羁绊做得好感人。", likes: 567 },
+        { user: "比比东的回忆", text: "每次看到大师年轻时的二创，心都会痛，玉小刚值得被全世界温柔以待。", likes: 412 }
+    ];
+
+    function renderComments() {
+        const commentContainer = document.getElementById('commentList');
+        if(!commentContainer) return;
+        commentContainer.innerHTML = '';
+        comments.forEach((comment, idx) => {
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment-item';
+            commentDiv.innerHTML = `
+                <div class="comment-text">
+                    <strong><i class="fas fa-user-circle"></i> ${escapeHtml(comment.user)}</strong> : ${escapeHtml(comment.text)}
+                </div>
+                <div class="comment-actions">
+                    <button class="like-btn" data-idx="${idx}"><i class="fas fa-thumbs-up"></i> ${comment.likes} 点赞</button>
+                </div>
+            `;
+            commentContainer.appendChild(commentDiv);
+        });
+        // 绑定点赞事件
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const idx = btn.getAttribute('data-idx');
+                if(idx !== null) {
+                    comments[idx].likes += 1;
+                    renderComments();
+                }
+            });
+        });
+    }
+
+    // 添加新评论
+    function addNewComment() {
+        let userName = prompt("留下你的昵称（二创爱好者）:", "斗罗二创侠");
+        if(!userName) userName = "匿名创作者";
+        let commentText = prompt(`分享你对玉小刚二创视频的感想或推荐：`, "大师的智慧让我画了十幅同人图！");
+        if(commentText && commentText.trim() !== "") {
+            comments.unshift({
+                user: userName.substring(0, 20),
+                text: commentText.substring(0, 140),
+                likes: 0
+            });
+            renderComments();
+        } else if(commentText === "") {
+            alert("写点什么吧，让大师二创更温暖~");
+        }
+    }
+
+    // 额外生成一个“热门创意标签”区域
+    function initPage() {
+        renderVideoCards('videoGrid', videos);
+        renderVideoCards('extraGrid', extraCreations);
+        renderComments();
+        const addBtn = document.getElementById('addCommentBtn');
+        if(addBtn) addBtn.addEventListener('click', addNewComment);
+        // 轻微动态hover效果增加氛围
+        const style = document.createElement('style');
+        style.textContent = `.video-card .play-overlay i { transition: transform 0.2s; } .video-card:hover .play-overlay i { transform: scale(1.1); }`;
+        document.head.appendChild(style);
+    }
+
+    // 页面启动
+    initPage();
+</script>
+</body>
+</html>
